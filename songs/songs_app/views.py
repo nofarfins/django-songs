@@ -3,6 +3,9 @@ from rest_framework.decorators import api_view
 from .serializers import *
 from .models import *
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET', 'POST'])
@@ -31,6 +34,7 @@ def performance_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def performance_details(request, pk):
+    print("hey")
 
     try:
         performance = Performance.objects.get(pk=pk)
@@ -74,7 +78,9 @@ def songs_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
+        print(request.data)
         serializer = SongSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -131,10 +137,10 @@ def artist_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def artist_details(request, pk):
+def artist_details(request, id):
 
     try:
-        artist = Artist.objects.get(pk=pk)
+        artist = Artist.objects.get(id= id)
     except Artist.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -143,6 +149,7 @@ def artist_details(request, pk):
         return Response(serializer.data)
 
     elif request.method == 'PUT':
+        print(request.data)
         serializer = ArtistSerializer(artist, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -150,6 +157,7 @@ def artist_details(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
+        print(request.data)
         artist.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -246,3 +254,19 @@ def review_details(request, pk):
     elif request.method == 'DELETE':
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def current_user(request):
+    curr_user = request.user
+    # if curr_user.is_anonymous
+    # userprofile = UserProfile.objects.get(user=curr_user)
+    data = {
+        "first_name": curr_user.first_name,
+        "last_name": curr_user.last_name
+    }
+    return Response(data)

@@ -22,7 +22,7 @@ class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
         fields = '__all__'
-        depth = 1
+        depth = 0
 
 
 class ArtistSerializer(serializers.ModelSerializer):
