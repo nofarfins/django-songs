@@ -25,11 +25,17 @@ def performance_list(request):
 
     elif request.method == 'POST':
         print(request.data)
-        serializer = PerformanceSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        song = Song.objects.get(pk=request.data['song'])
+        singer = Artist.objects.get(pk=request.data['singer'])
+
+        performance = Performance.objects.create(link=request.data['link'], song=song, singer=singer, Amount_of_views=request.data['Amount_of_views'])
+
+        serializer = PerformanceSerializer(performance)
+
+        if performance.id is not None:
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
