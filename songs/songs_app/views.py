@@ -7,7 +7,13 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-
+@api_view(['GET'])
+def reviews(request, performance_id):
+    reviews = Review.objects.filter(Performance_id=performance_id)
+    if request.method== 'GET':
+        serializer = ReviewSerializer(reviews, many=True)
+        print(serializer.data)
+        return Response(serializer.data)
 @api_view(['GET', 'POST'])
 def performance_list(request):
     if request.method == 'GET':
@@ -40,7 +46,6 @@ def performance_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def performance_details(request, pk):
-    print("hey")
 
     try:
         performance = Performance.objects.get(pk=pk)

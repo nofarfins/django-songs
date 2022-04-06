@@ -29,6 +29,7 @@ class Performance(models.Model):
     link = models.URLField(max_length=512, null=True, blank=True)
 
 
+
 class Review(models.Model):
     Performance_id = models.ForeignKey(to=Performance, on_delete=models.RESTRICT, null=False, blank=False)
     review_title = models.CharField(null=False, blank=False, max_length=128)
