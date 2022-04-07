@@ -228,18 +228,19 @@ def reviews_list(request):
         if 'filter_title' in request.GET and request.GET['filter_title']:
             all_reviews = all_reviews.filter(review_title__icontains=request.GET['filter_title'])
 
-
-
         serializer = ReviewSerializer(all_reviews, many=True)
         print(serializer.data)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        print(request.data)
+        Performance_id=Performance.objects.get(pk=request.data['Performance_id'])
+        user = User.objects.get(pk=request.data['user'])
+        review = Review.objects.create(Performance_id=Performance_id, user=user, review_text=request.data['review_text'] )
+        serializer = ReviewSerializer(review)
+    if review.id is not None:
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 # ** login required **
