@@ -36,7 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = 'id', 'username', 'first_name', 'last_name', 'email'
-        depth = 0
+        depth = 1
 
 
 class ReviewSerializer(serializers.ModelSerializer):

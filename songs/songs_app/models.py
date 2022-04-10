@@ -16,7 +16,7 @@ class Song(models.Model):
     lyrics = models.CharField(null=False, blank=False, max_length=4256)
     song_writer = models.ForeignKey(to=Artist, on_delete=models.RESTRICT, related_name='writer')
     song_composer = models.ForeignKey(to=Artist, on_delete=models.RESTRICT, related_name='composer')
-    performed_by = models.ManyToManyField(to=Artist, through="Performance")
+    # performed_by = models.ManyToManyField(to=Artist, through="Performance")
 
     def __str__(self):
         return self.name
@@ -31,7 +31,7 @@ class Performance(models.Model):
 
 
 class Review(models.Model):
-    Performance_id = models.ForeignKey(to=Performance, on_delete=models.RESTRICT, null=False, blank=False)
+    Performance_id = models.ForeignKey(to=Performance, on_delete=models.CASCADE, null=False, blank=False)
     review_text = models.CharField(null=False, blank=False, max_length=512)
     user = models.ForeignKey(to=User, on_delete=models.RESTRICT, null=False, blank=False)
 
