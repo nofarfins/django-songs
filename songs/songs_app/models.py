@@ -14,17 +14,19 @@ class Artist(models.Model):
 class Song(models.Model):
     name = models.CharField(null=False, blank=False, max_length=256)
     lyrics = models.CharField(null=False, blank=False, max_length=4256)
-    song_writer = models.ForeignKey(to=Artist, on_delete=models.RESTRICT, related_name='writer')
-    song_composer = models.ForeignKey(to=Artist, on_delete=models.RESTRICT, related_name='composer')
+    song_writer = models.ForeignKey(to=Artist, on_delete=models.CASCADE, related_name='writer')
+    song_composer = models.ForeignKey(to=Artist, on_delete=models.CASCADE, related_name='composer')
     # performed_by = models.ManyToManyField(to=Artist, through="Performance")
+    image = models.ImageField()
+
 
     def __str__(self):
         return self.name
 
 
 class Performance(models.Model):
-    song = models.ForeignKey(to=Song, on_delete=models.RESTRICT)
-    singer = models.ForeignKey(to=Artist, on_delete=models.RESTRICT)
+    song = models.ForeignKey(to=Song, on_delete=models.CASCADE)
+    singer = models.ForeignKey(to=Artist, on_delete=models.CASCADE)
     Amount_of_views= models.PositiveIntegerField(null=False, blank=False)
     link = models.URLField(max_length=512, null=True, blank=True)
 

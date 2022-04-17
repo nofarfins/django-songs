@@ -90,12 +90,9 @@ def songs_list(request):
 
     elif request.method == 'POST':
         print(request.data)
-        song_writer = Artist.objects.get(pk = request.data['song_writer'])
+        song_writer = Artist.objects.get(pk=request.data['song_writer'])
         song_composer = Artist.objects.get(pk=request.data['song_composer'])
         song =Song.objects.create(song_writer=song_writer, song_composer=song_composer,name = request.data['name'], lyrics=request.data['lyrics'])
-
-
-
         serializer = SongSerializer(song)
 
         if song.id is not None:
