@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,6 +8,7 @@ class Artist(models.Model):
     name = models.CharField(null=False, blank=False, max_length=256)
     age = models.PositiveIntegerField(null=False, blank=False)
     information = models.CharField(null=False, blank=False, max_length=4256)
+    picture = models.URLField(null=True, blank=True, max_length=4256)
 
     def __str__(self):
         return self.name
@@ -13,11 +16,13 @@ class Artist(models.Model):
 
 class Song(models.Model):
     name = models.CharField(null=False, blank=False, max_length=256)
-    lyrics = models.CharField(null=False, blank=False, max_length=4256)
+    # lyrics = models.CharField(null=False, blank=False, max_length=4256)
+    lyrics = models.URLField(null=True, blank=True, max_length=4256)
     song_writer = models.ForeignKey(to=Artist, on_delete=models.CASCADE, related_name='writer')
     song_composer = models.ForeignKey(to=Artist, on_delete=models.CASCADE, related_name='composer')
     # performed_by = models.ManyToManyField(to=Artist, through="Performance")
-    image = models.ImageField()
+    picture = models.URLField(null=True, blank=True, max_length=4256)
+
 
 
     def __str__(self):
