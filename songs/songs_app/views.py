@@ -14,6 +14,8 @@ def reviews(request, performance_id):
         serializer = ReviewSerializer(reviews, many=True)
         print(serializer.data)
         return Response(serializer.data)
+
+
 @api_view(['GET', 'POST'])
 def performance_list(request):
     if request.method == 'GET':
@@ -224,7 +226,7 @@ def user_details(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# ** login required **
+
 @api_view(['GET', 'POST'])
 def reviews_list(request):
     if request.method == 'GET':
@@ -248,7 +250,6 @@ def reviews_list(request):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-# ** login required **
 @api_view(['GET', 'PUT', 'DELETE'])
 def review_details(request, pk):
 
@@ -287,3 +288,5 @@ def current_user(request):
         "last_name": curr_user.last_name
     }
     return Response(data)
+
+
