@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-z+pt&*$5%y5(8mli5mb(wuwp-z$*(mg*ih#!@3c_343i!2df1u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nofar-django-songs.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['nofar-django-songs.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS= [
+CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'https://nofar-react-songs.herokuapp.com',
